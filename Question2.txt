@@ -1,0 +1,29 @@
+How to make threadsafe
+----------------------
+
+A quick solution is to:
+  - Make the List<PaymemtRecord> static
+  - wrap it in Collections.synchronizedList
+  - add a reset() (or suitably named method) to clear the list before starting a load
+
+This makes the list threadsafe on load with probably minimal synchroisation over head. 
+This is probably an adequate tweak but has potential hidden side effects (for example
+running two counts over different days at the same time)
+
+A better solution is to move to a Map Reduce type design where the class is split into two 
+
+  - One that breaks the file into a list of payment records (the Map part)
+  - One that hen passes the List and sums  the payments(the reduce part)
+
+This design is far more flexible and pushes the threading knowledge into the Map Reduce 
+framework. In this case the framework would be minimal, e.g 
+  - Create a thread and Maapper for each file
+  - Let all threads run to completions
+  - Combine all results (simply append lists from each thread or for
+      efficiency create a 'list of list' class) 
+  - Run reducer over the full list
+
+
+  
+
+
