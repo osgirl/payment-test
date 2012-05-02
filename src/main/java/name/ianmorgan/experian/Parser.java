@@ -2,7 +2,7 @@ package name.ianmorgan.experian;
 
 
 /**
- * As provided by Expperian
+ * As provided for code test
  *
  */
 public interface Parser {

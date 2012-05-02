@@ -1,7 +1,15 @@
-Implementation of Payment File processing test 
+Implementation of Payment File processing test
+Requires:
+  Java 6 JDK
+  Maven 2
 
-No ANT script or maven build. Please run via included Eclipse project 
+To build: 
+  mvn clean install
+  
+To run: 
+  mvn exec:java 
+  
+To re-build eclipse project:
+  mvn eclispe:eclipse   
 
-Pass date in dd-mm-yyyy format e,g. 
-    PaymentTest 27-03-2012
 

@@ -18,16 +18,20 @@ import java.util.regex.Pattern;
 
 /**
  * 
- * <p>Payment file processing. Based on following assumptions</p>
+ * <p>
+ * Payment file processing. Based on following assumptions:
+ * </p>
  * <ul>
- *   <li>Volumes low, so no need to keep internal lookups for efficiency</li>
- *   <li>All record valid format - no error handling </li>
- *   <li>Currencies stored with two decimal places(so what about Yen etc?)</li> 
+ * <li>Volumes low, so no need to keep internal lookups for efficiency (and file
+ * I/O will almost certainly be the first performance bottleneck)</li>
+ * <li>All record have valid format - no error handling or attempt to skip bad
+ * records</li>
+ * <li>Currencies stored with two decimal places(so what about Yen etc?)</li>
  * </ul>
  * 
  * 
- * @author Ian Morgan 
- *
+ * @author Ian Morgan
+ * 
  */
 public class ParserImpl implements Parser {
 
@@ -85,25 +89,23 @@ public class ParserImpl implements Parser {
 
 	@Override
 	public int count(String currency) {
-		// assumes all currencies stored to 2 digits.
-		int total = 0;
+		int count = 0;
 		for (PaymentRecord record : payments) {
 			if (currency.equals(record.currency)) {
-				total += record.amount * 100;
+				count++;
 			}
 		}
-
-		return total;
+		return count;
 	}
 
 	@Override
 	public void print(PrintStream out) {
 		NumberFormat nf = new DecimalFormat("###,###,###.00");
 		for (String currency : allCurrencies()) {
-			double total = count(currency);
+			double total = sum(currency);
 			out.print(currency);
 			out.print(' ');
-			out.print(nf.format(total / 100));
+			out.print(nf.format(total));
 			out.print('\n');
 		}
 	}
@@ -114,6 +116,16 @@ public class ParserImpl implements Parser {
 			result.add(record.currency);
 		}
 		return result;
+	}
+
+	private double sum(String currency) {
+		double total = 0;
+		for (PaymentRecord record : payments) {
+			if (currency.equals(record.currency)) {
+				total += record.amount;
+			}
+		}
+		return total;
 	}
 
 	/**
