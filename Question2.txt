@@ -6,12 +6,12 @@ A quick solution is to:
   - wrap it in Collections.synchronizedList
   - add a reset() (or suitably named method) to clear the list before starting a load
 
-This makes the list threadsafe on load with probably minimal synchroisation over head. 
+This makes the list threadsafe on load with probably minimal synchronisation over head. 
 This is probably an adequate tweak but has potential hidden side effects (for example
 running two counts over different days at the same time).
 
 Threadsafe code is hard to write and even harder to verify. Generally it is 
-better to hide this logic within some kind framework or controller where it can 
+better to hide this logic within some kind of framework or controller where it can 
 be tested in isolation. A pattern that would work well in this case is Map-Reduce, 
 where the class is split into two: 
 
@@ -26,6 +26,7 @@ into the Map Reduce framework. In this case the framework could be minimal, e.g:
   - Combine all results (simply append lists from each thread or for
       efficiency create a 'list of list' class) 
   - Run a reducer over the full list.
+
 
 
   
