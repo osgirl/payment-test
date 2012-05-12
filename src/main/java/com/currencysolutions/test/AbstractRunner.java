@@ -46,7 +46,7 @@ abstract public class AbstractRunner {
 
 	private void checkArguments(String[] args) {
 		if (args.length < 2) {
-			System.out.printf("Usage: java %s <Parser Class Name> <Date: dd/mm/yyyy>%n", getClass().getName());
+			System.out.printf("Usage: java %s  <Date: dd/mm/yyyy>%n", getClass().getName());
 			System.exit(1);
 		}
 	}
