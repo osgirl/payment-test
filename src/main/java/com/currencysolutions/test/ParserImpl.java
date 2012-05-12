@@ -1,4 +1,4 @@
-package name.ianmorgan.experian;
+package com.currencysolutions.test;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,9 +45,9 @@ public class ParserImpl implements Parser {
 	private List<PaymentRecord> payments;
 	private Pattern paymentRecordPattern = Pattern.compile("^PAY\\d{6}[A-Z]{2}$");
 
-	public ParserImpl(Date date) {
-		this.date = date;
-		this.payments = new ArrayList<PaymentRecord>();
+	public ParserImpl(ParserContext context) {
+		this.date = context.getDate();
+		this.payments = context.getPayments();
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public class ParserImpl implements Parser {
 	/**
 	 * A simple class to hold data. Only used internally
 	 */
-	private static class PaymentRecord {
+	public static class PaymentRecord {
 		public double amount;
 		public String currency;
 	}

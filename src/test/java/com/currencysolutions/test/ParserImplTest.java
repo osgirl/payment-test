@@ -1,4 +1,4 @@
-package name.ianmorgan.experian;
+package com.currencysolutions.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,13 +16,12 @@ public class ParserImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		parser = new ParserImpl(new SimpleDateFormat("dd-MM-yyyy").parse("27-03-2012"));
+		parser = new ParserImpl(new ParserContext(new SimpleDateFormat("dd-MM-yyyy").parse("27-03-2012")));
 	}
 
 	@Test
 	public void shouldCountCurrency() throws Exception {
 		parser.parse(new File("statement1.txt"));
-
 		assertEquals(2, parser.count("GBP"));
 	}
 
