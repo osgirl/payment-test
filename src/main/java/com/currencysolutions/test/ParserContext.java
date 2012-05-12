@@ -12,9 +12,9 @@ import com.currencysolutions.test.ParserImpl.PaymentRecord;
  * 
  * Its a simple way of ensuring that in a multithread scenario when multiple 
  * parsers are running they can also share access to a single 
- * synchronized list
+ * synchronized list.
  * 
- * It also means multiple concurrent process can be independently without 
+ * It also means multiple concurrent process can be run independently without 
  * fear of them overwriting each other's data. Even if there is no business 
  * need for this, it much safe operationally as there is no chance of a 
  * rouge process (say one that never completed properly) overwriting another.   

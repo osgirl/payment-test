@@ -1,13 +1,10 @@
-package name.ianmorgan.experian;
+package com.currencysolutions.test;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.currencysolutions.test.Parser;
-import com.currencysolutions.test.ParserContext;
-import com.currencysolutions.test.ParserImpl;
 
 public class PaymentTest {
 

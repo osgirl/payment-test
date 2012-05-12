@@ -1,0 +1,20 @@
+Notes on making this code thread safe  
+-------------------------------------
+
+
+The class PaserImpl has been updated to be threasafe safe. In doing this I made a very minor 
+change to fix what is really the a limitation in the original design, which is that there is no
+clear way to signal when a new group of parsers is being created and hence when to 
+reallocate any shared internal storage. This can partially be inferred by the final call to the 
+print(PrintStream out) method, but this both unclear and fragile (for instance, what happens if 
+an exception occurs).
+
+The interface is unchanged, but the constructor now takes a ParserContext object. This hold the 
+date and also the shared, threadsafe list). Thus whenever a new group is created they are guaranteed a 
+clean list.
+
+There is also a unit test, ParallelRunnerTest that behaves as a simple stress test,
+reapedly running multiple threads. 
+
+
+  
