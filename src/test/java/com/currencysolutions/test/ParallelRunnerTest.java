@@ -23,7 +23,7 @@ public class ParallelRunnerTest {
 	public void stressTestThreadingCode() throws Exception {
 		for (int i = 0; i < 1000; i++) {
 			Date date = new SimpleDateFormat("dd-MM-yyyy").parse("27-03-2012");
-			Parser parser = new ParserImpl(new ParserContext(date));
+			Parser parser = new ParserImpl(date);
 
 			// run two thread:
 			ParserThread thread1 = new ParserThread(parser, new File("statement1.txt"));

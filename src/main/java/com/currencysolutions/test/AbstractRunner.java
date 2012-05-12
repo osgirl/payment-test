@@ -28,7 +28,7 @@ abstract public class AbstractRunner {
 
 	private Parser tryConstructParser(String parserClassName, Date targetDate) {
 		try {
-			return constructParser(parserClassName, new ParserContext(targetDate));
+			return constructParser(parserClassName, targetDate);
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(String.format("Cannot find class %s", parserClassName), e);
 		} catch (Exception e) {
@@ -36,12 +36,12 @@ abstract public class AbstractRunner {
 		}
 	}
 
-	private Parser constructParser(String parserClassName, ParserContext parserContext) throws ClassNotFoundException,
+	private Parser constructParser(String parserClassName, Date date) throws ClassNotFoundException,
 			NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
 
 		Class<? extends Parser> clazz = Class.forName(parserClassName).asSubclass(Parser.class);
-		Constructor<? extends Parser> constructor = clazz.getConstructor(ParserContext.class);
-		return constructor.newInstance(parserContext);
+		Constructor<? extends Parser> constructor = clazz.getConstructor(Date.class);
+		return constructor.newInstance(date);
 	}
 
 	private void checkArguments(String[] args) {

@@ -16,7 +16,7 @@ public class ParserImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		parser = new ParserImpl(new ParserContext(new SimpleDateFormat("dd-MM-yyyy").parse("27-03-2012")));
+		parser = new ParserImpl(new SimpleDateFormat("dd-MM-yyyy").parse("27-03-2012"));
 	}
 
 	@Test

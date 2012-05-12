@@ -9,6 +9,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -45,9 +46,9 @@ public class ParserImpl implements Parser {
 	private List<PaymentRecord> payments;
 	private Pattern paymentRecordPattern = Pattern.compile("^PAY\\d{6}[A-Z]{2}$");
 
-	public ParserImpl(ParserContext context) {
-		this.date = context.getDate();
-		this.payments = context.getPayments();
+	public ParserImpl(Date date ) {
+		this.date = date;
+		this.payments = Collections.synchronizedList(new ArrayList<PaymentRecord>());
 	}
 
 	@Override

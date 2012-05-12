@@ -9,7 +9,7 @@ import java.util.Date;
 public class PaymentTest {
 
 	public static void main(String[] args) {
-		Parser parser = new ParserImpl(new ParserContext(parseDate(args)));
+		Parser parser = new ParserImpl(parseDate(args));
 		try {
 			parser.parse(new File("statement1.txt"));
 			parser.parse(new File("statement2.txt"));
