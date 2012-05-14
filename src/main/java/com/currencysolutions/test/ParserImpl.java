@@ -46,9 +46,9 @@ public class ParserImpl implements Parser {
 	private List<PaymentRecord> payments;
 	private Pattern paymentRecordPattern = Pattern.compile("^PAY\\d{6}[A-Z]{2}$");
 
-	public ParserImpl(Date date ) {
+	public ParserImpl(Date date) {
 		this.date = date;
-		this.payments = Collections.synchronizedList(new ArrayList<PaymentRecord>());
+		this.payments = new ArrayList<PaymentRecord>();
 	}
 
 	@Override
@@ -60,7 +60,9 @@ public class ParserImpl implements Parser {
 			String[] tokens = line.split("\\|");
 			PaymentRecord payment = parseAsPaymentRecordForDay(date, tokens);
 			if (payment != null) {
-				payments.add(payment);
+				synchronized (this) {
+					payments.add(payment);
+				}
 			}
 		}
 	}
@@ -90,24 +92,28 @@ public class ParserImpl implements Parser {
 
 	@Override
 	public int count(String currency) {
-		int count = 0;
-		for (PaymentRecord record : payments) {
-			if (currency.equals(record.currency)) {
-				count++;
+		synchronized (this) { 
+			int count = 0;
+			for (PaymentRecord record : payments) {
+				if (currency.equals(record.currency)) {
+					count++;
+				}
 			}
+			return count;
 		}
-		return count;
 	}
 
 	@Override
 	public void print(PrintStream out) {
-		NumberFormat nf = new DecimalFormat("###,###,###.00");
-		for (String currency : allCurrencies()) {
-			double total = sum(currency);
-			out.print(currency);
-			out.print(' ');
-			out.print(nf.format(total));
-			out.print('\n');
+		synchronized (this) {
+			NumberFormat nf = new DecimalFormat("###,###,###.00");
+			for (String currency : allCurrencies()) {
+				double total = sum(currency);
+				out.print(currency);
+				out.print(' ');
+				out.print(nf.format(total));
+				out.print('\n');
+			}
 		}
 	}
 

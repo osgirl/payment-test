@@ -1,8 +1,10 @@
 Notes on making this code thread safe  
 -------------------------------------
 The class PaserImpl has been updated to be threasafe. The change is very minor,
-just use the inbuilt Collections.synchronizedList. This is not quite the most 
-performant solution (all we really need is a simple stack) but in this case it's sufficient.
+just use the synchronized code blocks. 
+
+Given the usage pattern in the example parallel runner, it really only necessary to protect 
+the list add(). But to be defensive the print() and count() methods are also protected.
 
 There is also a unit test, ParallelRunnerTest that behaves as a simple stress test,
 repeatedly running multiple threads. 
