@@ -4,7 +4,8 @@ The class PaserImpl has been updated to be threasafe. The change is very minor,
 just use the synchronized code blocks. 
 
 Given the usage pattern in the example parallel runner, it really only necessary to protect 
-the list add(). But to be defensive the print() and count() methods are also protected.
+the list add(). But to be defensive the print() and count() methods are also protected. 
+The internal private methods are safe as all public methods have adequate protection.
 
 There is also a unit test, ParallelRunnerTest that behaves as a simple stress test,
 repeatedly running multiple threads. 
